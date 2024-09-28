@@ -19,7 +19,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          S3_BUCKET: 'deliverynow-bucket'
           aws-region: us-east-1
 
       - name: Checkout
@@ -46,7 +45,7 @@ jobs:
 
       - name: Push bucket
         run: |
-          aws s3 cp target/HelloWorld-1.0.jar s3://$S3_BUCKET/
-#        run: aws lambda update-function-code --function-name HandlerString --zip-file fileb://target/HelloWorld-1.0.jar
+          aws s3 cp target/Lambda-Auth-1.0.jar s3://deliverynow-bucket/
+
 
 
