@@ -47,5 +47,13 @@ jobs:
         run: |
           aws s3 cp target/Lambda-Auth-1.0.jar s3://deliverynow-bucket/
 
+      - name: Update Lambda Function
+        env:
+          LAMBDA_FUNCTION_NAME: 'lambda-deliverynow-auth'
+          S3_BUCKET: 'deliverynow-bucket'
+        run: |
+          aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --s3-bucket $S3_BUCKET --s3-key Lambda-Auth-1.0.jar
+        continue-on-error: true
+
 
 

@@ -1,12 +1,14 @@
 package authenticate.service;
 
 import authenticate.config.SecretManager;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.AuthFlowType;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.InitiateAuthRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,8 +24,8 @@ public class AuthenticationService {
 
     }
 
-    public String authenticateUser(String documento, String senha) {
-        var user = Optional.ofNullable(documento);
+    public Map<String, String> authenticateUser(String document, String senha) {
+        var user = Optional.ofNullable(document);
         var password = Optional.ofNullable(senha);
         var secretsCognito = SecretManager.getCognitoSecrets();
 
@@ -37,6 +39,12 @@ public class AuthenticationService {
                 .build();
 
         var authResponse = cognitoClient.initiateAuth(authRequest);
-        return authResponse.authenticationResult().idToken();
+
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("accessToken", authResponse.authenticationResult().accessToken());
+        responseBody.put("expiresIn",String.valueOf(authResponse.authenticationResult().expiresIn()));
+        responseBody.put("refreshToken", authResponse.authenticationResult().refreshToken());
+
+        return responseBody;
     }
 }
