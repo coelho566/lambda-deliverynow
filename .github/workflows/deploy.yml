@@ -19,7 +19,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          S3_BUCKET: 'lambda-auth-bucket'
+          S3_BUCKET: 'deliverynow-bucket'
           aws-region: us-east-1
 
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        run: terraform apply
+        run: terraform apply -auto-approve
         continue-on-error: true
 
       - name: Setup Java
@@ -44,7 +44,7 @@ jobs:
       - name: Build Project
         run: mvn clean install
 
-      - name: Update Lambda Function
+      - name: Push bucket
         run: |
           aws s3 cp target/HelloWorld-1.0.jar s3://$S3_BUCKET/
 #        run: aws lambda update-function-code --function-name HandlerString --zip-file fileb://target/HelloWorld-1.0.jar

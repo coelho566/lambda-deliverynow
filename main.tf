@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "lambda-auth-bucket"
+  bucket = "deliverynow-bucket"
 
   tags = {
     Terraform   = "true"
