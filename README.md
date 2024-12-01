@@ -35,4 +35,4 @@ Esta AWS Lambda faz parte do sistema de delivery "deliverynow" e é responsável
 
 1. O usuário realiza uma requisição para o Gateway.
 2. A Lambda recebe a requisição e utiliza o Cognito para autenticar o usuário.
-3. Após a validação, a Lambda retorna uma resposta indicando o sucesso ou falha da autenticação.
+3. Após a validação, a Lambda retorna uma resposta indicando o sucesso ou falha da autenticação
